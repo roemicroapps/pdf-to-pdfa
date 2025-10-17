@@ -1,0 +1,15 @@
+{
+  "name": "tmp-gs-wasm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@jspawn/ghostscript-wasm": "^0.0.2"
+  }
+}
