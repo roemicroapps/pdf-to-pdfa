@@ -1,4 +1,4 @@
-const CACHE = 'pdfa-cache-v1';
+const CACHE = 'pdfa-cache-v2';
 self.addEventListener('install', e => {
   const base = self.registration.scope; // π.χ. https://username.github.io/repo/
   const ASSETS = [

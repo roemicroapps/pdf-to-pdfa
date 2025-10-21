@@ -154,5 +154,17 @@ const $ = (q) => document.querySelector(q);
 
     if ('serviceWorker' in navigator) {
       const BASE = location.pathname.replace(/[^\/]*$/, '');
-      navigator.serviceWorker.register(`${BASE}sw.js`, { scope: BASE }).catch(() => {});
+      navigator.serviceWorker.register(`${BASE}sw.js`, { scope: BASE })
+        .then(registration => {
+          registration.onupdatefound = () => {
+            const installingWorker = registration.installing;
+            if (installingWorker == null) return;
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) console.log('Νέο περιεχόμενο είναι διαθέσιμο. Παρακαλώ ανανεώστε τη σελίδα.');
+                else console.log('Το περιεχόμενο έχει αποθηκευτεί στην cache για χρήση offline.');
+              }
+            };
+          };
+        }).catch(() => {});
     }
