@@ -3,200 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PDF → PDF/A on GitHub Pages (WASM, no install)</title>
-  <style>
-    :root { --bg:#0b1020; --card:#121936; --ink:#e6ebff; --muted:#b8c0ff; --accent:#7aa2ff; }
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial}
-    .wrap{max-width:880px;margin:48px auto;padding:0 16px}
-    .card{background:var(--card);border-radius:18px;box-shadow:0 10px 30px rgba(0,0,0,.35);padding:24px}
-    h1{font-size:26px;margin:0 0 6px}
-    p.sub{color:var(--muted);margin:0 0 18px}
-    label{display:block;margin:14px 0 8px;color:var(--muted)}
-    input[type=file],select,button{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #2a3567;background:#0f1530;color:var(--ink)}
-    button{cursor:pointer;background:linear-gradient(180deg, #4258d8, #2f47bf);border:none;font-weight:600}
-    button[disabled]{opacity:.6;cursor:not-allowed}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .log{white-space:pre-wrap;background:#0a0f26;border-radius:12px;border:1px solid #223067;padding:12px;min-height:84px}
-    .footer{font-size:13px;color:var(--muted);margin-top:12px}
-    a{color:var(--accent)}
-  </style>
+  <title>Μετατροπή PDF σε PDF/A - Περιφέρεια Ηπείρου</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>PDF → PDF/A (στον browser)</h1>
-      <p class="sub">Έτοιμο για <strong>GitHub Pages</strong>: όλα τρέχουν στον browser, χωρίς εγκατάσταση. Τα αρχεία (WASM & ICC) σερβίρονται από το ίδιο repo και γίνονται cache με Service Worker.</p>
 
-      <label for="file">Αρχείο PDF</label>
+      <header class="header">
+    <img src="assets/poe.png" alt="Λογότυπο Περιφέρειας Ηπείρου" class="header-logo">
+    <div class="header-text">
+      <h1>Μετατροπή Αρχείων PDF σε PDF/A</h1>
+      <p>Εφαρμογή της Περιφέρειας Ηπείρου</p>
+    </div>
+  </header>
+    <main class="container">
+        <div class="card">
       <input id="file" type="file" accept="application/pdf" />
+      <div id="upload-area" class="upload-area">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-4-4V7a4 4 0 014-4h1.586a1 1 0 01.707.293l1.414 1.414a1 1 0 00.707.293H12a4 4 0 014 4v1.586a1 1 0 01-.293.707l-1.414 1.414a1 1 0 00-.293.707V16m-7-4h4m-2 2v-4" />
+        </svg>
+        <div class="upload-area-text">Σύρετε το αρχείο PDF εδώ</div>
+        <div class="upload-area-subtext">ή κάντε κλικ για επιλογή</div>
+      </div>
 
-      <div class="row">
+      <div id="file-info" class="file-info"></div>
+
+      <div class="options">
         <div>
           <label for="flavor">Έκδοση PDF/A</label>
           <select id="flavor">
-            <option value="1">PDF/A‑1b</option>
-            <option value="2" selected>PDF/A‑2b</option>
-            <option value="3">PDF/A‑3b</option>
+            <option value="1">PDF/A-1b</option>
+            <option value="2" selected>PDF/A-2b</option>
+            <option value="3">PDF/A-3b</option>
           </select>
         </div>
         <div>
-          <label for="fname">Όνομα εξόδου</label>
-          <input id="fname" placeholder="π.χ. myfile_pda_A.pdf" />
+          <label for="fname">Όνομα αρχείου εξόδου</label>
+          <input id="fname" type="text" placeholder="output_pda.pdf" />
         </div>
       </div>
 
-      <label for="btn">Μετατροπή</label>
-      <button id="btn">Μετατροπή τώρα</button>
+      <button id="btn">Μετατροπή</button>
 
-      <div style="margin-top:14px">
-        <a id="dl" style="display:none" download>⬇️ Λήψη αρχείου PDF/A</a>
+      <!-- From Uiverse.io by Nawsome --> 
+      <div class="loader" id="loader-container" style="display: none;">
+        <div>
+          <ul>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+            <li>
+              <svg fill="currentColor" viewBox="0 0 90 120">
+                <path d="M90,0 L90,120 L11,120 C4.92486775,120 0,115.075132 0,109 L0,11 C0,4.92486775 4.92486775,0 11,0 L90,0 Z M71.5,81 L18.5,81 C17.1192881,81 16,82.1192881 16,83.5 C16,84.8254834 17.0315359,85.9100387 18.3356243,85.9946823 L18.5,86 L71.5,86 C72.8807119,86 74,84.8807119 74,83.5 C74,82.1745166 72.9684641,81.0899613 71.6643757,81.0053177 L71.5,81 Z M71.5,57 L18.5,57 C17.1192881,57 16,58.1192881 16,59.5 C16,60.8254834 17.0315359,61.9100387 18.3356243,61.9946823 L18.5,62 L71.5,62 C72.8807119,62 74,60.8807119 74,59.5 C74,58.1192881 72.8807119,57 71.5,57 Z M71.5,33 L18.5,33 C17.1192881,33 16,34.1192881 16,35.5 C16,36.8254834 17.0315359,37.9100387 18.3356243,37.9946823 L18.5,38 L71.5,38 C72.8807119,38 74,36.8807119 74,35.5 C74,34.1192881 72.8807119,33 71.5,33 Z"></path>
+              </svg>
+            </li>
+          </ul>
+        </div><span>Loading</span>
       </div>
-
-      <label style="margin-top:16px">Καταγραφή</label>
-      <div id="log" class="log">Έτοιμο…</div>
-
-      <p class="footer">Για GitHub Pages: βάλε τα αρχεία στο repo σου κάτω από <code>assets/</code> (πλάι στο <code>index.html</code>) και πρόσθεσε ένα αρχείο <code>sw.js</code> στο ίδιο directory. Η σελίδα χρησιμοποιεί σχετικές διαδρομές ώστε να παίζει σε <code>username.github.io/repo/</code>.</p>
+      
+      <a id="dl" style="display:none" download>⬇️ Λήψη Αρχείου</a>
     </div>
+  </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 Περιφέρεια Ηπείρου. Με την υποστήριξη του Ghostscript WASM.</p>
+    </footer>
   </div>
 
   <script src="./assets/gs.js"></script>
-  <script>
-    const $ = (q)=>document.querySelector(q);
-    const log = (m)=>{ const el=$('#log'); el.textContent += (el.textContent?"\n":"") + m; el.scrollTop = el.scrollHeight; };
-    const clearLog=()=>$('#log').textContent='';
-
-    // Πρόταση ονόματος εξόδου με βάση το όνομα εισόδου
-    function suggestOutName(name){
-      const base = String(name||'output').replace(/\.[Pp][Dd][Ff]$/, '');
-      return base + '_pda_A.pdf';
-    }
-
-    async function initGS(){
-      // Προσπαθούμε διάφορα γνωστά factories/μοτίβα Emscripten
-      if (typeof Ghostscript === 'function') return await Ghostscript();
-      if (typeof GS === 'function') return await GS();
-      if (typeof Module === 'function') return await Module();
-      if (typeof Module === 'object' && Module) {
-        if (Module.FS && Module.calledRun) return Module; // ήδη έτοιμο
-        // περίμενε μέχρι να αρχικοποιηθεί
-        await new Promise(res => {
-          const ready = () => res();
-          if (Module.onRuntimeInitialized) {
-            const prev = Module.onRuntimeInitialized;
-            Module.onRuntimeInitialized = () => { prev(); ready(); };
-          } else {
-            Module.onRuntimeInitialized = ready;
-          }
-        });
-        return Module;
-      }
-      throw new Error('Δεν βρέθηκε το Ghostscript WASM module. Βεβαιωθείτε ότι φορτώνει σωστά το assets/gs.js.');
-    }
-
-    async function convert() {
-      const f = $('#file').files[0];
-      if (!f) { alert('Διάλεξε ένα PDF.'); return; }
-      const flavor = $('#flavor').value; // 1,2,3
-      const suggested = suggestOutName(f.name || 'output');
-      const outName = ($('#fname').value || suggested).replace(/\s+/g,'-');
-      $('#btn').disabled = true; $('#dl').style.display='none'; clearLog();
-
-      log('Φόρτωση Ghostscript…');
-      const gs = await initGS();
-
-      // δρομολόγηση stdout/stderr στο log
-      gs.print = (t)=>log(String(t||'').trim());
-      gs.printErr = (t)=>log(String(t||'').trim());
-
-      // Προετοιμασία FS
-      const inName = 'in.pdf';
-      const iccName = 'sRGB.icc';
-      const outNameFS = 'out.pdf';
-
-      const buf = new Uint8Array(await f.arrayBuffer());
-      gs.FS.writeFile(inName, buf);
-
-      // Φόρτωση ICC προφίλ (από το ίδιο origin)
-      try {
-        const BASE = location.pathname.replace(/[^\\/]*$/, '');
-        const icc = await fetch(`${BASE}assets/sRGB.icc`);
-        if (!icc.ok) throw new Error('Αποτυχία φόρτωσης ICC');
-        const iccBuf = new Uint8Array(await icc.arrayBuffer());
-        gs.FS.writeFile(iccName, iccBuf);
-      } catch (e) {
-        log('⚠️ Δεν βρέθηκε sRGB.icc στο assets/. Θα προσπαθήσουμε χωρίς αυτό, αλλά η συμμόρφωση PDF/A μπορεί να αποτύχει.');
-      }
-
-      // Ghostscript arguments για PDF/A‑xb (βασική συμμόρφωση)
-      // Σημ.: Η πλήρης συμμόρφωση απαιτεί έγκυρη ενσωμάτωση γραμματοσειρών & output intent.
-      const OI_NAME = 'sRGB IEC61966-2.1';
-      const args = [
-        '-dBATCH','-dNOPAUSE',
-        `-dPDFA=${flavor}`,
-        '-sDEVICE=pdfwrite',
-        // Συμμόρφωση & χρώμα
-        '-dUseCIEColor',
-        '-sProcessColorModel=DeviceRGB',
-        '-sColorConversionStrategy=UseDeviceIndependentColor',
-        // Γραμματοσειρές
-        '-dEmbedAllFonts=true',
-        '-dSubsetFonts=true',
-        '-dCompressFonts=true',
-        // Πολιτική συμβατότητας PDF/A
-        '-sPDFACompatibilityPolicy=1',
-        // Output intent / ICC
-        `-sPDFAOutputIntent=${OI_NAME}`,
-        `-sOutputICCProfile=${iccName}`,
-        `-sOutputFile=${outNameFS}`,
-        inName
-      ];
-
-      log('Εκτέλεση Ghostscript με επιχειρήματα:\n  ' + args.join(' '));
-      try {
-        gs.callMain(args);
-      } catch (e) {
-        log('❌ Σφάλμα Ghostscript: ' + (e && e.message ? e.message : e));
-      }
-
-      // Ανάγνωση εξόδου
-      try {
-        const out = gs.FS.readFile(outNameFS);
-        const blob = new Blob([out], {type:'application/pdf'});
-        // Καθάρισε παλαιότερο URL για αποφυγή leaks
-        if (window.__prevURL) URL.revokeObjectURL(window.__prevURL);
-        const url = URL.createObjectURL(blob);
-        window.__prevURL = url;
-        const a = $('#dl');
-        a.href = url;
-        a.download = outName;
-        a.style.display = 'inline-block';
-        a.textContent = '⬇️ Λήψη ' + outName;
-        log('✅ Έτοιμο. Πάτησε "Λήψη".');
-      } catch (e) {
-        log('❌ Δεν βρέθηκε έξοδος. Ίσως η μετατροπή απέτυχε (fonts/ICC).');
-      } finally {
-        $('#btn').disabled = false;
-      }
-    }
-
-    // Όταν επιλέγεται αρχείο, πρότεινε αυτόματα όνομα εξόδου
-    document.getElementById('file').addEventListener('change', (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if (!f) return;
-      const s = suggestOutName(f.name);
-      const inp = document.getElementById('fname');
-      if (!inp.value) inp.value = s; else inp.placeholder = s;
-    });
-
-    document.getElementById('btn').addEventListener('click', ()=>{
-      convert().catch(err=>{ log('❌ '+err.message); $('#btn').disabled=false; });
-    });
-
-    // Service Worker (GitHub Pages friendly)
-    if ('serviceWorker' in navigator) {
-      const BASE = location.pathname.replace(/[^\\/]*$/, '');
-      navigator.serviceWorker.register(`${BASE}sw.js`, { scope: BASE }).catch(()=>{});
-    }
-  </script>
+  <script src="assets/main.js"></script>
 </body>
 </html>

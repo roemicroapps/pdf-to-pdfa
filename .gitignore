@@ -1,0 +1,23 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Build output
+dist/
+build/
+
+# Misc
+.env
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

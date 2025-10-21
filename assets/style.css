@@ -1,0 +1,379 @@
+:root {
+      --primary-color: #005bac;
+      --secondary-color: #2a7ab0;
+      --bg-color: #f4f7fa;
+      --card-bg-color: #ffffff;
+      --text-color: #333333;
+      --muted-color: #6c757d;
+      --border-color: #dee2e6;
+      --success-color: #28a745;
+      --error-color: #dc3545;
+      --font-family: 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    }
+    html {
+      height: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      background-color: #fff;
+    }
+    .header-logo {
+      height: 60px;
+      width: auto;
+    }
+    .header-text {
+      margin-left: 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 1px solid var(--border-color);
+    }
+    .header h1 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin: 0;
+      color: var(--text-color);
+    }
+    .header p {
+      font-size: 1rem;
+      color: var(--muted-color);
+      margin: 0.25rem 0 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2.5rem auto;
+      padding: 0 1rem;
+      flex: 1 0 auto;
+    }
+    .container-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    .card {
+      background-color: var(--card-bg-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+    }
+    .upload-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+    .upload-area:hover, .upload-area.drag-over {
+      border-color: var(--primary-color);
+      background-color: #f8f9fa;
+    }
+    .upload-area .icon {
+      width: 50px;
+      height: 50px;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+    .upload-area-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+    .upload-area-subtext {
+      color: var(--muted-color);
+      font-size: 0.9rem;
+    }
+    #file {
+      display: none;
+    }
+    .file-info {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #e9f5ff;
+      border-left: 4px solid var(--primary-color);
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .options {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 576px) {
+      .options {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--muted-color);
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: #fff;
+      color: var(--text-color);
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    button#btn {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 2rem;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 91, 172, 0.25);
+    }
+    button#btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 91, 172, 0.35);
+    }
+    button#btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 4px 15px rgba(0, 91, 172, 0.25);
+    }
+    a#dl {
+      display: none;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      background-color: var(--success-color);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: background-color 0.3s;
+    }
+    a#dl:hover {
+      background-color: #218838;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: var(--muted-color);
+    }
+
+    /* From Uiverse.io by Nawsome */ 
+    .loader {
+      --background: linear-gradient(135deg, #23C4F8, #275EFE);
+      --shadow: rgba(39, 94, 254, 0.28);
+      --text: #6C7486;
+      --page: rgba(255, 255, 255, 0.36);
+      --page-fold: rgba(255, 255, 255, 0.52);
+      --duration: 3s;
+      width: 200px;
+      height: 140px;
+      position: relative;
+      margin: 2.5rem auto;
+    }
+
+    .loader:before, .loader:after {
+      --r: -6deg;
+      content: "";
+      position: absolute;
+      bottom: 8px;
+      width: 120px;
+      top: 80%;
+      box-shadow: 0 16px 12px var(--shadow);
+      transform: rotate(var(--r));
+    }
+
+    .loader:before {
+      left: 4px;
+    }
+
+    .loader:after {
+      --r: 6deg;
+      right: 4px;
+    }
+
+    .loader div {
+      width: 100%;
+      height: 100%;
+      border-radius: 13px;
+      position: relative;
+      z-index: 1;
+      perspective: 600px;
+      box-shadow: 0 4px 6px var(--shadow);
+      background-image: var(--background);
+    }
+
+    .loader div ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      position: relative;
+    }
+
+    .loader div ul li {
+      --r: 180deg;
+      --o: 0;
+      --c: var(--page);
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      transform-origin: 100% 50%;
+      color: var(--c);
+      opacity: var(--o);
+      transform: rotateY(var(--r));
+      -webkit-animation: var(--duration) ease infinite;
+      animation: var(--duration) ease infinite;
+    }
+
+    .loader div ul li:nth-child(2) {
+      --c: var(--page-fold);
+      -webkit-animation-name: page-2;
+      animation-name: page-2;
+    }
+
+    .loader div ul li:nth-child(3) {
+      --c: var(--page-fold);
+      -webkit-animation-name: page-3;
+      animation-name: page-3;
+    }
+
+    .loader div ul li:nth-child(4) {
+      --c: var(--page-fold);
+      -webkit-animation-name: page-4;
+      animation-name: page-4;
+    }
+
+    .loader div ul li:nth-child(5) {
+      --c: var(--page-fold);
+      -webkit-animation-name: page-5;
+      animation-name: page-5;
+    }
+
+    .loader div ul li svg {
+      width: 90px;
+      height: 120px;
+      display: block;
+    }
+
+    .loader div ul li:first-child {
+      --r: 0deg;
+      --o: 1;
+    }
+
+    .loader div ul li:last-child {
+      --o: 1;
+    }
+
+    .loader span {
+      display: block;
+      left: 0;
+      right: 0;
+      top: 100%;
+      margin-top: 20px;
+      text-align: center;
+      color: var(--text);
+    }
+
+    @keyframes page-2 {
+      0% {
+        transform: rotateY(180deg);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      35%, 100% {
+        opacity: 0;
+      }
+
+      50%, 100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes page-3 {
+      15% {
+        transform: rotateY(180deg);
+        opacity: 0;
+      }
+
+      35% {
+        opacity: 1;
+      }
+
+      50%, 100% {
+        opacity: 0;
+      }
+
+      65%, 100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes page-4 {
+      30% {
+        transform: rotateY(180deg);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      65%, 100% {
+        opacity: 0;
+      }
+
+      80%, 100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes page-5 {
+      45% {
+        transform: rotateY(180deg);
+        opacity: 0;
+      }
+
+      65% {
+        opacity: 1;
+      }
+
+      80%, 100% {
+        opacity: 0;
+      }
+
+      95%, 100% {
+        transform: rotateY(0deg);
+      }
+    }
